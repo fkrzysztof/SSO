@@ -1,0 +1,70 @@
+﻿@model Sasso.Data.Data.Data.About
+@using Sasso.Data.HelperClass
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="row">
+        <div class="col-md-12 card card-body shadow pb-0 pt-3 my-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AboutID" />
+                <div class="mb-3">
+                    <label asp-for="Maintext" class="control-label h6"></label>
+                    <textarea asp-for="Maintext" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Maintext" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Text" class="control-label h6"></label>
+                    <textarea asp-for="Text" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="Text" class="text-danger"></span>
+                </div>
+                <div class="mb-3 d-flex justify-content-end">
+                    <input type="submit" value="Zapisz" class="btn btn-sm btn-outline-dark" />
+                </div>
+            </form>
+        </div>
+        <div class="col-12">
+            <form asp-action="AddPartners" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-12 mt-4">
+                        <label class="control-label">Partnerzy </label>
+                        <hr />
+                    </div>
+                    <div class="col-12 m-2 text-center">
+                        <div class="row d-flex justify-content-center justify-content-sm-center align-items-center text-center text-sm-center">
+                            @foreach (var item in Model.Partners)
+                            {
+                                <div class="col-md-4 rounded text-center align-self-center m-4 p-2 hide-show-item bg-white">
+                                    <img src="@(new CloudAccess().GetImg(item.MediaItem))" class="img-fluid img-fluid p-2 m-2" /><br />
+                                    <a asp-action="DeletePartnersImg" asp-route-id="@item.PartnersID" class="removeButton" data-id="@item.PartnersID"><i class="bi bi-x-circle m-4" style="font-size: 1rem; color:red;"></i></a>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="control-label">Dodaj grafike</label>
+                            <div class="input-group mb-3">
+                                <input type="file" name="partnersImg" multiple class="form-control" id="customFile">
+                                <label class="input-group-text" for="customFile">Plik(i)</label>
+                            </div>
+                            <span asp-validation-for="Partners.First().FormFileItem" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-end">
+                        <input type="submit" value="Zapisz" class="btn btn-sm btn-outline-dark" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+<script src="~/js/removePartners.js"></script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

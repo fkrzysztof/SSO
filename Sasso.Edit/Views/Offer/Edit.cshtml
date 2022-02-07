@@ -1,0 +1,53 @@
+﻿@model Sasso.Data.Data.Data.Offer
+@using Sasso.Data.HelperClass
+
+<script src="~/js/nicEdit.js"></script>
+<script type="text/javascript">
+    bkLib.onDomLoaded(function () { nicEditors.allTextAreas() });
+</script>
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="row align-items-md-end">
+        <div class="col-md-6">
+            <input type="hidden" asp-for="OfferID" />
+            <input type="hidden" asp-for="MediaItem" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label class="control-label"></label>
+                <img src="@(new CloudAccess().GetImg(Model.MediaItem))" class="imgPreview img-thumbnail " />
+                <div class="input-group mb-3">
+                    <input type="file" asp-for="FormFileItem" class="form-control newMediaItem" id="customFile">
+                    <label class="input-group-text" for="customFile">Plik</label>
+                </div>
+                <span asp-validation-for="FormFileItem" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea asp-for="Text" class="form-control linkAdd" rows="15"></textarea>
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-12">
+        </div>
+        <div class="col-12  d-flex justify-content-md-end my-4">
+            <div class="mb-3">
+                <input type="submit" value="Zapisz" class="btn btn-sm btn-outline-dark" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script src="~/js/photoPreview.js"></script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

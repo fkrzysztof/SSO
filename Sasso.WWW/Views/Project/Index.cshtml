@@ -1,0 +1,87 @@
+﻿@model Sasso.Data.Data.Data.Projects
+
+
+
+<section class="bg-dark pt-5">
+    <div class="container px-4 px-lg-5 pt-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-white mt-0">
+                    SZKOLENIA/PROJEKTY
+                </h2>
+                <hr class="divider" />
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-3" id="projekty">
+    <div class="container px-4 px-lg-5 text-center">
+        <div class="row justify-content-center full-text">
+            <div class="col-12">
+                <h3 class="text-start my-4">
+                    @ViewBag.Name
+                </h3>
+            </div>
+            <div class="col-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "News" ? "active" : "")" asp-action="News" asp-route-id="@ViewBag.id">Aktualności</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "About" ? "active" : "")" asp-action="About" asp-route-id="@ViewBag.id">O Projecie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Participants" ? "active" : "")" asp-action="Participants" asp-route-id="@ViewBag.id">Uczestnicy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "FormOfSupport" ? "active" : "")" asp-action="FormOfSupport" asp-route-id="@ViewBag.id">Formy wsparcia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Recruitment" ? "active" : "")" asp-action="Recruitment" asp-route-id="@ViewBag.id">Rekrutacja</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Contact" ? "active" : "")" asp-action="Contact" asp-route-id="@ViewBag.id">Kontakt</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Download" ? "active" : "")" asp-action="Download" asp-route-id="@ViewBag.id">Pliki</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-12 bg-white mt-5 text-start">
+                @if (ViewContext.RouteData.Values["Action"].ToString() == "Download")
+                {
+                    @foreach (var item in Model.Files)
+                    {
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-3">
+                                        @if (item.Path.Split(".").Last().Equals("pdf", StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <i class="bi bi-file-earmark-pdf mr-1" style="color: red; font-size: 2rem;"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-file-earmark-word mr-1" style="color: #0c4ca3; font-size: 2rem;"></i>
+                                        }
+                                        <a href="@("http://www.my.sasso.hostingasp.pl/Projects/DownloadFileJS/"+item.FileID)" target="_blank"> @item.Path</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                    }
+                }
+                else
+                {
+                    if (!String.IsNullOrEmpty(ViewBag.Content))
+                        @Html.Raw(ViewBag.Content)
+                    }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+

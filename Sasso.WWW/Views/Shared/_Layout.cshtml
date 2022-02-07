@@ -1,0 +1,202 @@
+﻿@using Sasso.Data.HelperClass
+@using Sasso.Data.Data.Data
+@{
+    Contact contact = ViewBag.Contact;
+    List<Address> addresses = ViewBag.Address;
+}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Sasso" /> @*uzupelnic*@
+    <meta name="author" content="Krzysztof Franczyk" />
+    <meta name="keywords" content="sasso, ue, pracownicy" /> @*uzuoelnic*@
+    <link rel="canonical" href="http://www.sasso.pl" />
+    <meta property="og:title" content="SASSO - Twój partner w biznesie"> @*uzupelnic*@
+    <meta property="og:site_name" content="www.sasso.pl"> @*uzupelnic*@
+    <meta property="og:url" content="www.sasso.pl">
+    <meta property="og:description" content="SASSO - Twój partner w biznesie">  @*uzupelnic*@
+    <meta property="og:type" content="business.busines">
+    <meta property="og:image" content="@(new CloudAccess().GetLogo())">
+    <title>SASSO - Twój partner w biznesie</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/css/styles1.css" rel="stylesheet" />>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+        <div class="container px-4 px-lg-5 bg-white">
+            <a class="navbar-brand" href="/Home#contact">
+                <img src="@(new CloudAccess().GetLogo())" />
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto my-2 my-lg-0" id="menuhide">
+
+                    <li class="nav-item"><a class="nav-link" href="/Home#about">O nas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Home#services">Oferta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Home#project">Szkolenia/Projekty</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Home#contact">Kontakt</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    @await Html.PartialAsync("imageBox.cshtml")
+
+
+    @RenderBody()
+
+    <!-- Footer Logo-->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row d-flex justify-content-center justify-content-sm-center align-items-center text-center text-sm-center">
+                @foreach (var item in ViewBag.Partners as List<string>)
+                {
+                    <div class="col-6 col-md-3 text-center align-self-center mt-2">
+                        <img src="@(new CloudAccess().GetImg(item))" class="img-fluid img-fluid px-2" />
+                    </div>
+                }
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Contact-->
+    <section class="contact" id="contact">
+        <div class="container">
+
+            <div class="row">
+                @* I *@
+                <div class="col-md-4 d-flex justify-content-center justify-content-sm-start align-items-start text-center text-sm-start order-1">
+                    <div class="row">
+                        <address class="col-12">
+                            <i class="bi bi-info-square footer-icon" style="font-size: 2em; color: #f4623a;"></i><br />
+                            @contact.Name <br />
+                            KRS:  @contact.KRS<br />
+                            NIP:  @contact.NIP<br />
+                            REGON: @contact.REGON<br />
+                        </address>
+                        <address class="col-12">
+                            <i class="bi bi-phone footer-icon" style="font-size: 2em; color: #f4623a;"></i><br />
+                            @foreach (var itemPhone in addresses.FirstOrDefault(w => w.HeadOffice == true).Phones)
+                            {
+                                @itemPhone.NamePhone
+                                @::
+                                @itemPhone.PhoneNumber
+                                @:<br />
+                            }
+                        </address>
+                        <address class="col-12">
+                            <i class="bi bi-envelope" style="font-size: 2em; color: #f4623a;"></i><br />
+                            @foreach (var itemEmail in addresses.FirstOrDefault(w => w.HeadOffice == true).Emails)
+                            {
+                                @itemEmail.EmailAdress
+                                @: <br />
+                            }
+                        </address>
+                    </div>
+                </div>
+
+                @* II *@
+                <div class="col-md-4 d-flex justify-content-center justify-content-sm-center align-items-center text-center text-sm-center order-3 order-sm-2 my-2">
+                    <div class="row">
+                        <div class="col-12 mt-4">
+                            <a href="http://www.sasso.hostingasp.pl/Home/Fb" target="_blank"><i class="bi bi-facebook m-3" style="color:white; font-size:2rem;"></i></a>
+                            <a href="http://www.sasso.hostingasp.pl/Home/Whatsapp" target="_blank"><i class="bi bi-whatsapp m-3" style="color:white; font-size:2rem;"></i></a>
+                            <a href="http://www.sasso.hostingasp.pl/Home/Twitter" target="_blank"><i class="bi bi-twitter m-3" style="color:white; font-size:2rem;"></i></a>
+                            <a href="" id="share"><i class="bi bi-share-fill m-3" style="color:white; font-size:2rem;"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+
+                @* III *@
+                <div class="col-md-4 d-flex justify-content-center justify-content-sm-end align-items-start text-center text-sm-end order-2 order-sm-3">
+                    <div class="row">
+
+                        <i class="bi bi-geo-alt footer-icon" style="font-size: 2em; color: #f4623a;"></i><br />
+                        @foreach (var itemAddress in addresses)
+                        {
+                            <address class="col-12">
+                                @(itemAddress.HeadOffice == true ? "Siedziba główna" : "Filia") <br />
+
+                                @if (!String.IsNullOrEmpty(itemAddress.Name))
+                                {
+                                    @itemAddress.Name
+                                    @:<br />
+                                }
+
+                                @itemAddress.Street @itemAddress.Number <br />
+                                @itemAddress.ZIPCode @itemAddress.City <br />
+                                @itemAddress.Country <br />
+
+
+                                @if (!itemAddress.HeadOffice)
+                                {
+                                    <br />
+                                    @foreach (var itemPhone in itemAddress.Phones)
+                                    {
+                                        @itemPhone.NamePhone @itemPhone.PhoneNumber
+                                        <br />
+                                    }
+                                    @foreach (var itemEmail in itemAddress.Emails)
+                                    {
+                                        @itemEmail.EmailAdress
+                                        <br />
+                                    }
+
+                                }
+                            </address>
+                        }
+                    </div>
+                </div>
+
+                @* IV *@
+                <div class="col-12 text-center company-name order-4">
+                    Copyright &copy; @DateTime.Now.Year - SASSO
+                    <hr class="divider" />
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <div class="container-fluid rodo" id="rodo">
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <span class="float-end rodox"><a href="#" id="rodoc"><i class="bi bi-x-square m-2" style="font-size:1.5rem;"></i></a></span>
+                <h6>Ta strona wykorzystuje pliki cookie</h6>
+                <p>
+                    Używamy informacji zapisanych za pomocą plików cookies w celu zapewnienia maksymalnej wygody w korzystaniu z naszego serwisu.
+                    Mogą też korzystać z nich współpracujące z nami firmy badawcze oraz reklamowe. Jeżeli wyrażasz zgodę na zapisywanie informacji zawartej w cookies kliknij na &bdquo;x&rdquo; w prawym górnym rogu tej informacji.
+                    Jeśli nie wyrażasz zgody, ustawienia dotyczące plików cookies możesz zmienić w swojej przeglądarce.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="copy-info"><i class="bi bi-clipboard-check" style="font-size: 4rem; color:white;"></i></div>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- SimpleLightbox plugin JS-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/js/scripts.js"></script>
+    <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+    <script src="~/js/index12.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
